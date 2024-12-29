@@ -41,7 +41,7 @@ export function Layout({ children }: LayoutProps): React.JSX.Element {
           p: 3,
         }}
       >
-        <Stack spacing={3}>
+        {/* <Stack spacing={3}>
           <Stack spacing={1}>
             <Typography color="inherit" sx={{ fontSize: '24px', lineHeight: '32px', textAlign: 'center' }} variant="h1">
               Welcome to{' '}
@@ -61,7 +61,7 @@ export function Layout({ children }: LayoutProps): React.JSX.Element {
               sx={{ height: 'auto', width: '100%', maxWidth: '600px' }}
             />
           </Box>
-        </Stack>
+        </Stack> */}
       </Box>
     </Box>
   );

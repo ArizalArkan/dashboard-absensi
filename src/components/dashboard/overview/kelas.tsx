@@ -2,36 +2,38 @@ import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import LinearProgress from '@mui/material/LinearProgress';
 import Stack from '@mui/material/Stack';
 import type { SxProps } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import { ListBullets as ListBulletsIcon } from '@phosphor-icons/react/dist/ssr/ListBullets';
+import { UsersThree as KelasIcon } from '@phosphor-icons/react/dist/ssr/UsersThree';
 
-export interface TasksProgressProps {
+export interface KelasProps {
   sx?: SxProps;
-  value: number;
+  value: string;
 }
 
-export function TasksProgress({ value, sx }: TasksProgressProps): React.JSX.Element {
+export function Kelas({ sx, value }: KelasProps): React.JSX.Element {
+
   return (
     <Card sx={sx}>
       <CardContent>
         <Stack spacing={2}>
           <Stack direction="row" sx={{ alignItems: 'flex-start', justifyContent: 'space-between' }} spacing={3}>
             <Stack spacing={1}>
-              <Typography color="text.secondary" gutterBottom variant="overline">
-                Task Progress
+              <Typography color="text.secondary" variant="overline">
+                Kelas
               </Typography>
-              <Typography variant="h4">{value}%</Typography>
+              <Typography variant="h4">{value}</Typography>
             </Stack>
             <Avatar sx={{ backgroundColor: 'var(--mui-palette-warning-main)', height: '56px', width: '56px' }}>
-              <ListBulletsIcon fontSize="var(--icon-fontSize-lg)" />
+              <KelasIcon fontSize="var(--icon-fontSize-lg)" />
             </Avatar>
           </Stack>
-          <div>
-            <LinearProgress value={value} variant="determinate" />
-          </div>
+            <Stack sx={{ alignItems: 'center', justifyContent:'center' }} direction="row" spacing={2}>
+              <Typography color="text.secondary" variant="caption">
+                SELENGKAPNYA
+              </Typography>
+            </Stack>
         </Stack>
       </CardContent>
     </Card>

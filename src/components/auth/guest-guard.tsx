@@ -15,6 +15,7 @@ export interface GuestGuardProps {
 export function GuestGuard({ children }: GuestGuardProps): React.JSX.Element | null {
   const router = useRouter();
   const { user, error, isLoading } = useUser();
+  console.log("🚀 ~ GuestGuard ~ user:", user)
   const [isChecking, setIsChecking] = React.useState<boolean>(true);
 
   const checkPermissions = async (): Promise<void> => {

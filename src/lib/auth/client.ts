@@ -9,7 +9,7 @@ function generateToken(): string {
 }
 
 const user = {
-  id: 'USR-000',
+  id: '1',
   avatar: '/assets/avatar.png',
   firstName: 'Sofia',
   lastName: 'Rivers',
@@ -28,8 +28,9 @@ export interface SignInWithOAuthParams {
 }
 
 export interface SignInWithPasswordParams {
-  email: string;
+  username: string;
   password: string;
+  role: string;
 }
 
 export interface ResetPasswordParams {
@@ -52,19 +53,42 @@ class AuthClient {
   }
 
   async signInWithPassword(params: SignInWithPasswordParams): Promise<{ error?: string }> {
-    const { email, password } = params;
-
-    // Make API request
-
-    // We do not handle the API, so we'll check if the credentials match with the hardcoded ones.
-    if (email !== 'sofia@devias.io' || password !== 'Secret1') {
-      return { error: 'Invalid credentials' };
+    console.log("🚀 ~ AuthClient ~ signInWithPassword ~ params:", params)
+    const { username, password, role } = params;
+  
+    try {
+      // Make API request to your backend
+      const response = await fetch('http://localhost:4000/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          password,
+          role
+        }),
+      });
+  
+      // Parse the response
+      if (!response.ok) {
+        const errorResponse = await response.json();
+        return { error: errorResponse?.message || 'Login failed' };
+      }
+  
+      const data = await response.json();
+  
+      // Assuming the response includes a token
+      if (data.token) {
+        localStorage.setItem('custom-auth-token', data.token);
+        return {};
+      }
+  
+      return { error: 'No token received from the server' };
+    } catch (error) {
+      console.error('Error during sign-in:', error);
+      return { error: 'Something went wrong, please try again later' };
     }
-
-    const token = generateToken();
-    localStorage.setItem('custom-auth-token', token);
-
-    return {};
   }
 
   async resetPassword(_: ResetPasswordParams): Promise<{ error?: string }> {
