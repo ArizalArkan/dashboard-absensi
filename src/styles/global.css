@@ -31,3 +31,14 @@ html {
 body {
   height: 100%;
 }
+.breadcrumbs a {
+  text-decoration: none;
+  color: #5d5d5d;
+}
+.breadcrumbs a:hover {
+  text-decoration: underline;
+}
+.breadcrumbs p {
+  color: #212636;
+  font-weight: 500;
+}

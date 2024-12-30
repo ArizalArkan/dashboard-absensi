@@ -25,7 +25,7 @@ export function MainNav(): React.JSX.Element {
     let i;
 
     /* eslint-disable no-bitwise */
-    for (i = 0; i < string.length; i += 1) {
+    for (i = 0; i < string?.length; i += 1) {
       hash = string.charCodeAt(i) + ((hash << 5) - hash);
     }
 
@@ -42,7 +42,8 @@ export function MainNav(): React.JSX.Element {
 
   function stringAvatar(name: string) {
     const nameParts = name?.split(' ');
-    const initials = nameParts?.length > 1 ? `${nameParts[0][0]}${nameParts[1][0]}` : nameParts[0][0]; // Use only the first letter if there's a single word
+    const initials = nameParts?.length > 1 ? `${nameParts[0][0]}${nameParts[1][0]}` : '';
+    // const initials = nameParts?.length > 1 ? `${nameParts[0][0]}${nameParts[1][0]}` : nameParts[0][0]; // Use only the first letter if there's a single word
 
     return {
       sx: {
@@ -81,7 +82,7 @@ export function MainNav(): React.JSX.Element {
             </IconButton>
           </Stack>
           <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
-            <Avatar onClick={userPopover.handleOpen} ref={userPopover.anchorRef} {...stringAvatar(user?.username)}></Avatar>
+            <Avatar onClick={userPopover.handleOpen} ref={userPopover.anchorRef} {...stringAvatar(user?.username)} />
           </Stack>
         </Stack>
       </Box>
