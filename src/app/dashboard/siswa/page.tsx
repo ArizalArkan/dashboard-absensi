@@ -10,7 +10,7 @@ import { config } from '@/config';
 import { CustomersFilters } from '@/components/dashboard/customer/customers-filters';
 import type { Customer } from '@/components/dashboard/customer/customers-table';
 import { SiswaFilters } from '@/components/dashboard/customer/siswa-filters';
-import { SiswaTable, type Siswa } from '@/components/dashboard/customer/siswa-table';
+import { TableSiswa, type Siswa } from '@/components/dashboard/customer/table-siswa';
 
 export const metadata = { title: `Siswa | Dashboard | ${config.site.name}` } satisfies Metadata;
 
@@ -157,7 +157,7 @@ export default function Page(): React.JSX.Element {
         </Stack>
       </Stack>
       <SiswaFilters />
-      <SiswaTable count={paginatedCustomers.length} page={page} rows={paginatedCustomers} rowsPerPage={rowsPerPage} />
+      <TableSiswa count={paginatedCustomers.length} page={page} rows={paginatedCustomers} rowsPerPage={rowsPerPage} />
     </Stack>
   );
 }
