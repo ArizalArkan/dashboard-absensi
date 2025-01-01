@@ -25,7 +25,7 @@ export default function NextAppDirEmotionCacheProvider(props: NextAppDirEmotionC
     const cache = createCache(options);
     cache.compat = true;
 
-    const prevInsert = cache.insert;
+    const prevInsert = cache.insert.bind(cache);
     let inserted: { name: string; isGlobal: boolean }[] = [];
     cache.insert = (...args) => {
       const [selector, serialized] = args;
