@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 'use client';
 
 import * as React from 'react';
@@ -16,11 +18,12 @@ import { UserPopover } from './user-popover';
 export function MainNav(): React.JSX.Element {
   const [openNav, setOpenNav] = React.useState<boolean>(false);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { user }: any = useUser();
 
   const userPopover = usePopover<HTMLDivElement>();
 
-  function stringToColor(string: string) {
+  function stringToColor(string: string): string {
     let hash = 0;
     let i;
 
@@ -40,7 +43,7 @@ export function MainNav(): React.JSX.Element {
     return color;
   }
 
-  function stringAvatar(name: string) {
+  function stringAvatar(name: string): object {
     const nameParts = name?.split(' ');
     const initials = nameParts?.length > 1 ? `${nameParts[0][0]}${nameParts[1][0]}` : '';
     // const initials = nameParts?.length > 1 ? `${nameParts[0][0]}${nameParts[1][0]}` : nameParts[0][0]; // Use only the first letter if there's a single word

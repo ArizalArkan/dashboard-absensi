@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { jwtDecode } from 'jwt-decode'; // Adjusted import for jwt-decode
+
 import type { User } from '@/types/user';
 import { logger } from '@/lib/default-logger';
 
@@ -27,7 +28,7 @@ export function UserProvider({ children }: UserProviderProps): React.JSX.Element
 
   const decodeToken = (token: string): User | null => {
     try {
-      const decoded: any = jwtDecode(token); // Decode the token into a User object
+      const decoded: never = jwtDecode(token); // Decode the token into a User object
       return decoded;
     } catch (error) {
       logger.error('Failed to decode token:', error);

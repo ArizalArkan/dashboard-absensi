@@ -5,8 +5,6 @@ import CardContent from '@mui/material/CardContent';
 import Stack from '@mui/material/Stack';
 import type { SxProps } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import { ArrowDown as ArrowDownIcon } from '@phosphor-icons/react/dist/ssr/ArrowDown';
-import { ArrowUp as ArrowUpIcon } from '@phosphor-icons/react/dist/ssr/ArrowUp';
 import { Users as SiswaIcon } from '@phosphor-icons/react/dist/ssr/Users';
 
 export interface SiswaProps {
@@ -15,7 +13,6 @@ export interface SiswaProps {
 }
 
 export function Siswa({ sx, value }: SiswaProps): React.JSX.Element {
-
   return (
     <Card sx={sx}>
       <CardContent>
@@ -31,11 +28,9 @@ export function Siswa({ sx, value }: SiswaProps): React.JSX.Element {
               <SiswaIcon fontSize="var(--icon-fontSize-lg)" />
             </Avatar>
           </Stack>
-            <Stack sx={{ alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }} direction="row" spacing={2}>
-              <Typography variant="caption">
-                SELENGKAPNYA
-              </Typography>
-            </Stack>
+          <Stack sx={{ alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }} direction="row" spacing={2}>
+            <Typography variant="caption">SELENGKAPNYA</Typography>
+          </Stack>
         </Stack>
       </CardContent>
     </Card>

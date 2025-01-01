@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import RouterLink from 'next/link';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Alert from '@mui/material/Alert';
@@ -19,7 +18,6 @@ import { EyeSlash as EyeSlashIcon } from '@phosphor-icons/react/dist/ssr/EyeSlas
 import { Controller, useForm } from 'react-hook-form';
 import { z as zod } from 'zod';
 
-import { paths } from '@/paths';
 import { authClient } from '@/lib/auth/client';
 import { useUser } from '@/hooks/use-user';
 
@@ -69,7 +67,6 @@ export function SignInForm(): React.JSX.Element {
         // After refresh, GuestGuard will handle the redirect
         router.refresh();
       } catch (err) {
-        console.error('Error during form submission:', err);
         setError('root', { type: 'server', message: 'Something went wrong, please try again.' });
       } finally {
         setIsPending(false);

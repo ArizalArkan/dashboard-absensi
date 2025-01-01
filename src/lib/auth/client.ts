@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 'use client';
 
 import type { User } from '@/types/user';
@@ -53,9 +56,8 @@ class AuthClient {
   }
 
   async signInWithPassword(params: SignInWithPasswordParams): Promise<{ error?: string }> {
-    console.log("🚀 ~ AuthClient ~ signInWithPassword ~ params:", params)
     const { username, password, role } = params;
-  
+
     try {
       // Make API request to your backend
       const response = await fetch('http://localhost:4000/api/auth/login', {
@@ -66,27 +68,26 @@ class AuthClient {
         body: JSON.stringify({
           username,
           password,
-          role
+          role,
         }),
       });
-  
+
       // Parse the response
       if (!response.ok) {
         const errorResponse = await response.json();
         return { error: errorResponse?.message || 'Login failed' };
       }
-  
+
       const data = await response.json();
-  
+
       // Assuming the response includes a token
       if (data.token) {
         localStorage.setItem('custom-auth-token', data.token);
         return {};
       }
-  
+
       return { error: 'No token received from the server' };
     } catch (error) {
-      console.error('Error during sign-in:', error);
       return { error: 'Something went wrong, please try again later' };
     }
   }
