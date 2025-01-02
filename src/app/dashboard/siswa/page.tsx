@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
@@ -9,6 +11,7 @@ import { useAddSiswa } from '@/query/siswa';
 import { Breadcrumbs } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { toast, ToastContainer } from 'react-toastify';
 
 import ModalAddSiswa from '@/components/dashboard/modal/modal-add-siswa';
 import DisplaySiswa from '@/components/dashboard/siswa/display-siswa';
@@ -27,11 +30,16 @@ export default function Page(): React.JSX.Element {
         phone: data?.phone,
         role: 'siswa',
       });
-      // console.log('Data berhasil dikirim:', response.data);
       setOpenModalAdd(false);
+      toast.success('Data berhasil dibuat', {
+        position: 'bottom-right',
+      });
       return response;
     } catch (error) {
-      return error;
+      // @ts-expect-error
+      toast.error(`Data gagal dibuat. ${error?.response?.data?.error}`, {
+        position: 'bottom-right',
+      });
     }
   };
 
@@ -59,6 +67,7 @@ export default function Page(): React.JSX.Element {
         }}
         handleSubmitAdd={handleSubmitAdd}
       />
+      <ToastContainer />
     </Stack>
   );
 }
