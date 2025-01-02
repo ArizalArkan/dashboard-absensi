@@ -79,5 +79,6 @@ module.exports = {
 
     '@next/next/no-img-element': 'off', // Temporary disabled
     'eslint-comments/require-description': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
   },
 };

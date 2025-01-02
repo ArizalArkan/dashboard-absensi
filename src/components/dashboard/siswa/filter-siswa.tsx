@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
@@ -10,7 +13,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { Stack } from '@mui/system';
 
-export function FilterSiswa(): React.JSX.Element {
+export function FilterSiswa(props: { setOpenModalAdd: any }): React.JSX.Element {
+  const { setOpenModalAdd } = props;
   return (
     <Card
       sx={{ p: 2 }}
@@ -25,7 +29,12 @@ export function FilterSiswa(): React.JSX.Element {
         }}
       >
         <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-          <Button color="primary" variant="contained" startIcon={<AddRoundedIcon />}>
+          <Button
+            color="primary"
+            variant="contained"
+            startIcon={<AddRoundedIcon />}
+            onClick={() => setOpenModalAdd(true)}
+          >
             Tambah Siswa
           </Button>
           <Button color="inherit" startIcon={<UploadRoundedIcon />}>

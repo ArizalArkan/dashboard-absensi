@@ -70,7 +70,7 @@ export function TableSiswa(props: TableSiswaProps): React.JSX.Element {
   const [order, setOrder] = React.useState<Order>('asc');
   const [orderBy, setOrderBy] = React.useState('');
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(rowsPage || 10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(rowsPage || 5);
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Siswa): void => {
     const isAsc = orderBy === property && order === 'asc';
@@ -107,14 +107,11 @@ export function TableSiswa(props: TableSiswaProps): React.JSX.Element {
             <TableBody>
               {visibleRows.map((row, index) => {
                 return (
-                  <TableRow key={row.id} hover>
+                  <TableRow key={index} hover>
                     <TableCell>{index + 1}</TableCell>
-                    <TableCell>{row?.name || '-'}</TableCell>
+                    <TableCell>{row?.username || '-'}</TableCell>
                     <TableCell>{row?.nis || '-'}</TableCell>
-                    <TableCell>{row?.parent || '-'}</TableCell>
                     <TableCell>{row?.phone || '-'}</TableCell>
-                    <TableCell>{row?.class || '-'}</TableCell>
-                    <TableCell>{row?.address || '-'}</TableCell>
                     <TableCell>
                       <div className="action-table">
                         <Button
