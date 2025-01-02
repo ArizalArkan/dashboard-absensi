@@ -42,3 +42,22 @@ body {
   color: #212636;
   font-weight: 500;
 }
+.action-table {
+  display: flex;
+  gap: 5px;
+}
+.action-table button {
+  padding: 5px 10px;
+}
+.action-table button.edit {
+  background-color: #c69f91;
+}
+.action-table button.delete {
+  background-color: #ee4b6f;
+}
+.action-table button.whatsapp {
+  background-color: #25d366;
+}
+.action-table button.card {
+  background-color: #17a2b8;
+}

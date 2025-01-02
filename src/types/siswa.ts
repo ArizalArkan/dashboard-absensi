@@ -3,13 +3,13 @@ import type React from 'react';
 export interface Siswa {
   no?: number;
   id: string;
-  avatar: string;
   name: string;
   nis: number;
   parent: string;
   phone: string;
   class: string;
   address: string;
+  action?: string;
 }
 
 export interface TableSiswaProps {

@@ -7,10 +7,10 @@ import Typography from '@mui/material/Typography';
 
 import type { Siswa, SiswaColumns } from '@/types/siswa';
 import { config } from '@/config';
-import { FilterSiswa } from '@/components/dashboard/siswa/filter-siswa';
-import { TableSiswa } from '@/components/dashboard/siswa/table-siswa';
+import { FilterGuru } from '@/components/dashboard/guru/filter-guru';
+import { TableGuru } from '@/components/dashboard/guru/table-guru';
 
-export const metadata = { title: `Siswa | Dashboard | ${config.site.name}` } satisfies Metadata;
+export const metadata = { title: `Guru | Dashboard | ${config.site.name}` } satisfies Metadata;
 
 const siswaColumns: SiswaColumns[] = [
   {
@@ -243,15 +243,15 @@ export default function Page(): React.JSX.Element {
     <Stack spacing={3}>
       <Stack direction="row" spacing={3}>
         <Stack spacing={1} sx={{ flex: '1 1 auto' }}>
-          <Typography variant="h4">Halaman Siswa</Typography>
+          <Typography variant="h4">Halaman Guru</Typography>
           <Breadcrumbs className="breadcrumbs">
             <Link href="/dashboard">Dashboard</Link>
-            <Typography color="text.primary">Siswa</Typography>
+            <Typography color="text.primary">Guru</Typography>
           </Breadcrumbs>
         </Stack>
       </Stack>
-      <FilterSiswa />
-      <TableSiswa data={dataSiswaDummy} columns={siswaColumns} />
+      <FilterGuru />
+      <TableGuru data={dataSiswaDummy} columns={siswaColumns} />
     </Stack>
   );
 }

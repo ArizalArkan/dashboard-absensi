@@ -1,16 +1,16 @@
 import * as React from 'react';
-import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
-import LocalPrintshopOutlinedIcon from '@mui/icons-material/LocalPrintshopOutlined';
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
+import FilterAltRoundedIcon from '@mui/icons-material/FilterAltRounded';
+import SearchIcon from '@mui/icons-material/Search';
+import UploadRoundedIcon from '@mui/icons-material/UploadRounded';
 import { Button } from '@mui/material';
 import Card from '@mui/material/Card';
 import InputAdornment from '@mui/material/InputAdornment';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { Stack } from '@mui/system';
-import { Download as DownloadIcon } from '@phosphor-icons/react/dist/ssr/Download';
-import { MagnifyingGlass as MagnifyingGlassIcon } from '@phosphor-icons/react/dist/ssr/MagnifyingGlass';
-import { Plus as PlusIcon } from '@phosphor-icons/react/dist/ssr/Plus';
 
-export function SiswaFilters(): React.JSX.Element {
+export function FilterGuru(): React.JSX.Element {
   return (
     <Card
       sx={{ p: 2 }}
@@ -25,16 +25,16 @@ export function SiswaFilters(): React.JSX.Element {
         }}
       >
         <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-          <Button startIcon={<PlusIcon fontSize="var(--icon-fontSize-md)" />} variant="contained">
+          <Button color="primary" variant="contained" startIcon={<AddRoundedIcon />}>
             Tambah Siswa
           </Button>
-          <Button color="inherit" startIcon={<DownloadIcon fontSize="var(--icon-fontSize-md)" />}>
+          <Button color="inherit" startIcon={<UploadRoundedIcon />}>
             Import
           </Button>
-          <Button color="inherit" startIcon={<LocalPrintshopOutlinedIcon />}>
-            Cetak
+          <Button color="inherit" startIcon={<DownloadRoundedIcon />}>
+            Download
           </Button>
-          <Button color="inherit" startIcon={<FilterAltOutlinedIcon />}>
+          <Button color="inherit" startIcon={<FilterAltRoundedIcon />}>
             Filter
           </Button>
         </Stack>
@@ -45,7 +45,7 @@ export function SiswaFilters(): React.JSX.Element {
         placeholder="Cari siswa..."
         startAdornment={
           <InputAdornment position="start">
-            <MagnifyingGlassIcon fontSize="var(--icon-fontSize-md)" />
+            <SearchIcon />
           </InputAdornment>
         }
         sx={{ maxWidth: '300px' }}

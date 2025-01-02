@@ -1,8 +1,11 @@
 'use client';
 
 import * as React from 'react';
-import { Stack, Typography } from '@mui/material';
-import Avatar from '@mui/material/Avatar';
+import { WhatsApp } from '@mui/icons-material';
+import CreditCardRoundedIcon from '@mui/icons-material/CreditCardRounded';
+import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import { Button } from '@mui/material';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
@@ -106,17 +109,34 @@ export function TableSiswa(props: TableSiswaProps): React.JSX.Element {
                 return (
                   <TableRow key={row.id} hover>
                     <TableCell>{index + 1}</TableCell>
-                    <TableCell>
-                      <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
-                        <Avatar src={row.avatar} />
-                        <Typography variant="subtitle2">{row.name}</Typography>
-                      </Stack>
-                    </TableCell>
+                    <TableCell>{row?.name || '-'}</TableCell>
                     <TableCell>{row?.nis || '-'}</TableCell>
                     <TableCell>{row?.parent || '-'}</TableCell>
                     <TableCell>{row?.phone || '-'}</TableCell>
                     <TableCell>{row?.class || '-'}</TableCell>
                     <TableCell>{row?.address || '-'}</TableCell>
+                    <TableCell>
+                      <div className="action-table">
+                        <Button
+                          className="edit"
+                          size="small"
+                          variant="contained"
+                          color="success"
+                          startIcon={<EditRoundedIcon />}
+                        >
+                          Edit
+                        </Button>
+                        <Button className="delete" size="small" variant="contained" startIcon={<DeleteRoundedIcon />}>
+                          Hapus
+                        </Button>
+                        <Button className="whatsapp" size="small" variant="contained" startIcon={<WhatsApp />}>
+                          WA
+                        </Button>
+                        <Button className="card" size="small" variant="contained" startIcon={<CreditCardRoundedIcon />}>
+                          Kartu
+                        </Button>
+                      </div>
+                    </TableCell>
                   </TableRow>
                 );
               })}
