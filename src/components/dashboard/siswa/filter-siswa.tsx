@@ -15,6 +15,14 @@ import { Stack } from '@mui/system';
 
 export function FilterSiswa(props: { setOpenModalAdd: any }): React.JSX.Element {
   const { setOpenModalAdd } = props;
+
+  const handleDownload = (): void => {
+    window.open(
+      'https://server-absensi-production.up.railway.app/api/attendances/siswa-with-attendance?export=excel',
+      '_blank'
+    );
+  };
+
   return (
     <Card
       sx={{ p: 2 }}
@@ -40,7 +48,7 @@ export function FilterSiswa(props: { setOpenModalAdd: any }): React.JSX.Element 
           <Button color="inherit" startIcon={<UploadRoundedIcon />}>
             Import
           </Button>
-          <Button color="inherit" startIcon={<DownloadRoundedIcon />}>
+          <Button color="inherit" startIcon={<DownloadRoundedIcon />} onClick={handleDownload}>
             Download
           </Button>
           <Button color="inherit" startIcon={<FilterAltRoundedIcon />}>

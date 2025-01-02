@@ -70,7 +70,7 @@ export function TableSiswa(props: TableSiswaProps): React.JSX.Element {
   const [order, setOrder] = React.useState<Order>('asc');
   const [orderBy, setOrderBy] = React.useState('');
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(rowsPage || 5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(rowsPage || 10);
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Siswa): void => {
     const isAsc = orderBy === property && order === 'asc';

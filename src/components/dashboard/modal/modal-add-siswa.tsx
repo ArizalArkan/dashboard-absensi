@@ -1,4 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable jsx-a11y/no-autofocus */
 'use client';
@@ -13,13 +14,18 @@ import { Controller, useForm } from 'react-hook-form';
 
 export default function ModalAddSiswa(props: { open: any; handleClose: any; handleSubmitAdd: any }): React.JSX.Element {
   const { open, handleClose, handleSubmitAdd } = props;
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       username: '',
       nis: '',
       phone: '',
     },
   });
+
+  const onSubmit = async (data: any) => {
+    await handleSubmitAdd(data);
+    reset();
+  };
 
   return (
     <Dialog
@@ -32,7 +38,7 @@ export default function ModalAddSiswa(props: { open: any; handleClose: any; hand
         },
       }}
     >
-      <form onSubmit={handleSubmit(handleSubmitAdd)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <DialogTitle component="div" sx={{ paddingTop: '32px !important' }}>
           Tambah Siswa
         </DialogTitle>
