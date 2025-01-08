@@ -107,7 +107,7 @@ export function TableSiswa(props: TableSiswaProps): React.JSX.Element {
             <TableBody>
               {visibleRows.map((row, index) => {
                 return (
-                  <TableRow key={index} hover>
+                  <TableRow key={row?._id} hover>
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{row?.username || '-'}</TableCell>
                     <TableCell>{row?.nis || '-'}</TableCell>

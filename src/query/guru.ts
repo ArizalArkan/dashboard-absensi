@@ -11,34 +11,34 @@ import {
 } from '@tanstack/react-query';
 import axios from 'axios';
 
-import { type Siswa } from '@/types/siswa';
+import { type Guru } from '@/types/guru';
 
-interface UseGetSiswa {
-  data: Siswa[] | undefined;
+interface UseGetGuru {
+  data: Guru[] | undefined;
   isLoading: boolean;
   isError: boolean;
 }
 
-// interface UseAddSiswa {
+// interface UseAddGuru {
 //   data: any | undefined;
 //   isLoading: boolean;
 //   isError: boolean;
 // }
 
-interface AddSiswaData {
+interface AddGuruData {
   username: string;
-  nis: string;
+  nip: string;
   password: string;
   phone: number;
   role: string;
 }
 
-export const useGetSiswa = (): UseGetSiswa => {
+export const useGetGuru = (): UseGetGuru => {
   const { data, isLoading, isError }: UseQueryResult<[]> = useQuery({
-    queryKey: ['get_siswa'],
+    queryKey: ['get_guru'],
     queryFn: async () => {
       const { data } = await axios.get<[]>(
-        'https://server-absensi-production.up.railway.app/api/attendances/siswa-with-attendance'
+        'https://server-absensi-production.up.railway.app/api/attendances/guru-with-attendance'
       );
       return data;
     },
@@ -46,20 +46,20 @@ export const useGetSiswa = (): UseGetSiswa => {
   return { data, isLoading, isError };
 };
 
-export const useAddSiswa = (): UseMutationResult<any, Error, AddSiswaData> => {
+export const useAddGuru = (): UseMutationResult<any, Error, AddGuruData> => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: async (data) => {
       const response = await axios.post(
-        'https://server-absensi-production.up.railway.app/api/auth/add-user-siswa',
+        'https://server-absensi-production.up.railway.app/api/auth/add-user-guru',
         data
       );
       return response.data;
     },
     onSuccess: () => {
       // @ts-expect-error
-      queryClient.invalidateQueries('get_siswa');
+      queryClient.invalidateQueries('get_guru');
     },
   });
 

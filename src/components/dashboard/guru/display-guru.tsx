@@ -1,15 +1,15 @@
 'use client';
 
 import React from 'react';
-import { useGetSiswa } from '@/query/siswa';
+import { useGetGuru } from '@/query/guru';
 import { Skeleton } from '@mui/material';
 
-import { type SiswaColumns } from '@/types/siswa';
+import { type GuruColumns } from '@/types/guru';
 
 import ErrorDisplayTable from '../layout/error-display-table';
-import { TableSiswa } from './table-siswa';
+import { TableGuru } from './table-guru';
 
-const siswaColumns: SiswaColumns[] = [
+const guruColumns: GuruColumns[] = [
   {
     id: 'no',
     numeric: true,
@@ -21,9 +21,9 @@ const siswaColumns: SiswaColumns[] = [
     label: 'Nama',
   },
   {
-    id: 'nis',
+    id: 'nip',
     numeric: true,
-    label: 'NIS',
+    label: 'NIP',
   },
   {
     id: 'phone',
@@ -37,10 +37,10 @@ const siswaColumns: SiswaColumns[] = [
   },
 ];
 
-export default function DisplaySiswa(): React.JSX.Element {
-  const { data, isLoading, isError } = useGetSiswa();
+export default function DisplayGuru(): React.JSX.Element {
+  const { data, isLoading, isError } = useGetGuru();
 
   if (isLoading) return <Skeleton variant="rounded" height={430} />;
   if (isError) return <ErrorDisplayTable />;
-  return <TableSiswa data={data!} columns={siswaColumns} />;
+  return <TableGuru data={data!} columns={guruColumns} />;
 }

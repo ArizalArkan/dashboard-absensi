@@ -11,13 +11,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Controller, useForm } from 'react-hook-form';
 
-import { type FormSiswa, type ModalAddSiswaProps } from '@/types/siswa';
+import { type FormGuru, type ModalAddGuruProps } from '@/types/guru';
 
-export default function ModalAddSiswa(props: ModalAddSiswaProps): React.JSX.Element {
-  const { open, handleClose, handleSubmitAdd } = props;
-  const { control, handleSubmit, reset } = useForm<FormSiswa>();
+export default function ModalAddGuru(props: ModalAddGuruProps): React.JSX.Element {
+  const { open, handleClose, handleSubmitAdd, pageName } = props;
+  const { control, handleSubmit, reset } = useForm<FormGuru>();
 
-  const onSubmit = async (data: FormSiswa) => {
+  const onSubmit = async (data: FormGuru) => {
     await handleSubmitAdd(data);
     reset();
   };
@@ -35,7 +35,7 @@ export default function ModalAddSiswa(props: ModalAddSiswaProps): React.JSX.Elem
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogTitle component="div" sx={{ paddingTop: '32px !important' }}>
-          Tambah Siswa
+          Tambah {pageName}
         </DialogTitle>
         <DialogContent className="dialog-content">
           <Controller
@@ -45,10 +45,10 @@ export default function ModalAddSiswa(props: ModalAddSiswaProps): React.JSX.Elem
             render={({ field }) => <TextField {...field} label="Username" autoFocus fullWidth />}
           />
           <Controller
-            name="nis"
+            name="nip"
             control={control}
-            rules={{ required: 'nis is required' }}
-            render={({ field }) => <TextField {...field} label="NIS" autoFocus fullWidth />}
+            rules={{ required: 'nip is required' }}
+            render={({ field }) => <TextField {...field} label="NIP" autoFocus fullWidth />}
           />
           <Controller
             name="phone"

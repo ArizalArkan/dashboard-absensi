@@ -10,7 +10,18 @@ import InputAdornment from '@mui/material/InputAdornment';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { Stack } from '@mui/system';
 
-export function FilterGuru(): React.JSX.Element {
+import { type FilterGuruProps } from '@/types/guru';
+
+export function FilterGuru(props: FilterGuruProps): React.JSX.Element {
+  const { setOpenModalAdd, pageName } = props;
+
+  const handleDownload = (): void => {
+    window.open(
+      'https://server-absensi-production.up.railway.app/api/attendances/guru-with-attendance?export=excel',
+      '_blank'
+    );
+  };
+
   return (
     <Card
       sx={{ p: 2 }}
@@ -25,13 +36,20 @@ export function FilterGuru(): React.JSX.Element {
         }}
       >
         <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-          <Button color="primary" variant="contained" startIcon={<AddRoundedIcon />}>
-            Tambah Siswa
+          <Button
+            color="primary"
+            variant="contained"
+            startIcon={<AddRoundedIcon />}
+            onClick={() => {
+              setOpenModalAdd(true);
+            }}
+          >
+            Tambah {pageName}
           </Button>
           <Button color="inherit" startIcon={<UploadRoundedIcon />}>
             Import
           </Button>
-          <Button color="inherit" startIcon={<DownloadRoundedIcon />}>
+          <Button color="inherit" startIcon={<DownloadRoundedIcon />} onClick={handleDownload}>
             Download
           </Button>
           <Button color="inherit" startIcon={<FilterAltRoundedIcon />}>
@@ -42,7 +60,7 @@ export function FilterGuru(): React.JSX.Element {
       <OutlinedInput
         defaultValue=""
         fullWidth
-        placeholder="Cari siswa..."
+        placeholder={`Cari ${pageName}...`}
         startAdornment={
           <InputAdornment position="start">
             <SearchIcon />

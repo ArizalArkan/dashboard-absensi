@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
@@ -13,8 +10,10 @@ import InputAdornment from '@mui/material/InputAdornment';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { Stack } from '@mui/system';
 
-export function FilterSiswa(props: { setOpenModalAdd: any }): React.JSX.Element {
-  const { setOpenModalAdd } = props;
+import type { FilterSiswaProps } from '@/types/siswa';
+
+export function FilterSiswa(props: FilterSiswaProps): React.JSX.Element {
+  const { setOpenModalAdd, pageName } = props;
 
   const handleDownload = (): void => {
     window.open(
@@ -41,9 +40,11 @@ export function FilterSiswa(props: { setOpenModalAdd: any }): React.JSX.Element 
             color="primary"
             variant="contained"
             startIcon={<AddRoundedIcon />}
-            onClick={() => setOpenModalAdd(true)}
+            onClick={() => {
+              setOpenModalAdd(true);
+            }}
           >
-            Tambah Siswa
+            Tambah {pageName}
           </Button>
           <Button color="inherit" startIcon={<UploadRoundedIcon />}>
             Import
@@ -59,7 +60,7 @@ export function FilterSiswa(props: { setOpenModalAdd: any }): React.JSX.Element 
       <OutlinedInput
         defaultValue=""
         fullWidth
-        placeholder="Cari siswa..."
+        placeholder={`Cari ${pageName}...`}
         startAdornment={
           <InputAdornment position="start">
             <SearchIcon />

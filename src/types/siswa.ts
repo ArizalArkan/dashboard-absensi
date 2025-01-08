@@ -1,29 +1,19 @@
 import type React from 'react';
-
-// export interface Siswa {
-//   no?: number;
-//   id: string;
-//   name: string;
-//   nis: number;
-//   parent: string;
-//   phone: string;
-//   class: string;
-//   address: string;
-//   action?: string;
-// }
+import { type Dispatch, type SetStateAction } from 'react';
+import { type SubmitHandler } from 'react-hook-form';
 
 export interface Siswa {
   no?: number;
   action?: string;
   _id: string;
   __v: number;
+  createdAt: string;
+  updatedAt: string;
   username: string;
   nis: string;
   password: string;
   phone: number;
   role: string;
-  createdAt: string;
-  updatedAt: string;
   attendance: Attendance[];
 }
 
@@ -50,6 +40,14 @@ export interface TableSiswaProps {
   columns: SiswaColumns[];
 }
 
+export interface FormSiswa {
+  username: string;
+  nis: string;
+  phone: number;
+  // password: string;
+  // role: string;
+}
+
 export interface SiswaColumns {
   id: keyof Siswa;
   label: string;
@@ -63,4 +61,16 @@ export interface EnhancedTableHead {
   order: Order;
   orderBy: string;
   columns: SiswaColumns[];
+}
+
+export interface FilterSiswaProps {
+  setOpenModalAdd: Dispatch<SetStateAction<boolean>>;
+  pageName: string;
+}
+
+export interface ModalAddSiswaProps {
+  open: boolean;
+  handleClose: () => void;
+  handleSubmitAdd: SubmitHandler<FormSiswa>;
+  pageName: string;
 }
