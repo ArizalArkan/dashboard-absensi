@@ -38,7 +38,7 @@ export const useGetSiswa = (): UseGetSiswa => {
     queryKey: ['get_siswa'],
     queryFn: async () => {
       const { data } = await axios.get<[]>(
-        'https://server-absensi-production.up.railway.app/api/attendances/siswa-with-attendance'
+        `${process.env.NEXT_PUBLIC_BASE_URL}api/attendances/siswa-with-attendance`
       );
       return data;
     },
@@ -52,7 +52,7 @@ export const useAddSiswa = (): UseMutationResult<any, Error, AddSiswaData> => {
   const mutation = useMutation({
     mutationFn: async (data) => {
       const response = await axios.post(
-        'https://server-absensi-production.up.railway.app/api/auth/add-user-siswa',
+        `${process.env.NEXT_PUBLIC_BASE_URL}api/auth/add-user-siswa`,
         data
       );
       return response.data;

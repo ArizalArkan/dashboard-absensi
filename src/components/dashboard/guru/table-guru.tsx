@@ -66,11 +66,11 @@ function EnhancedTableHead(props: EnhancedTableHeadGuru): React.ReactElement {
 }
 
 export function TableGuru(props: TableGuruProps): React.JSX.Element {
-  const { rowsPage, data, columns } = props;
+  const { rowsPage = 10, data = [], columns } = props; // Default values for `data` and `rowsPage`
   const [order, setOrder] = React.useState<Order>('asc');
   const [orderBy, setOrderBy] = React.useState('');
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(rowsPage || 10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(rowsPage);
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Guru): void => {
     const isAsc = orderBy === property && order === 'asc';
@@ -89,13 +89,14 @@ export function TableGuru(props: TableGuruProps): React.JSX.Element {
 
   const visibleRows = React.useMemo(
     (): Guru[] =>
-      [...data]
-        .sort(getComparator(order, orderBy as keyof Guru))
-        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
+      Array.isArray(data)
+        ? [...data]
+            .sort(getComparator(order, orderBy as keyof Guru))
+            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+        : [],
     [data, order, orderBy, page, rowsPerPage]
   );
 
-  // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
   return (
@@ -105,38 +106,36 @@ export function TableGuru(props: TableGuruProps): React.JSX.Element {
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
             <EnhancedTableHead columns={columns} onRequestSort={handleRequestSort} order={order} orderBy={orderBy} />
             <TableBody>
-              {visibleRows.map((row, index) => {
-                return (
-                  <TableRow key={row?._id} hover>
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell>{row?.username || '-'}</TableCell>
-                    <TableCell>{row?.nip || '-'}</TableCell>
-                    <TableCell>{row?.phone || '-'}</TableCell>
-                    <TableCell>
-                      <div className="action-table">
-                        <Button
-                          className="edit"
-                          size="small"
-                          variant="contained"
-                          color="success"
-                          startIcon={<EditRoundedIcon />}
-                        >
-                          Edit
-                        </Button>
-                        <Button className="delete" size="small" variant="contained" startIcon={<DeleteRoundedIcon />}>
-                          Hapus
-                        </Button>
-                        <Button className="whatsapp" size="small" variant="contained" startIcon={<WhatsApp />}>
-                          WA
-                        </Button>
-                        <Button className="card" size="small" variant="contained" startIcon={<CreditCardRoundedIcon />}>
-                          Kartu
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+              {visibleRows.map((row, index) => (
+                <TableRow key={row?._id || index} hover>
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell>{row?.username || '-'}</TableCell>
+                  <TableCell>{row?.nip || '-'}</TableCell>
+                  <TableCell>{row?.phone || '-'}</TableCell>
+                  <TableCell>
+                    <div className="action-table">
+                      <Button
+                        className="edit"
+                        size="small"
+                        variant="contained"
+                        color="success"
+                        startIcon={<EditRoundedIcon />}
+                      >
+                        Edit
+                      </Button>
+                      <Button className="delete" size="small" variant="contained" startIcon={<DeleteRoundedIcon />}>
+                        Hapus
+                      </Button>
+                      <Button className="whatsapp" size="small" variant="contained" startIcon={<WhatsApp />}>
+                        WA
+                      </Button>
+                      <Button className="card" size="small" variant="contained" startIcon={<CreditCardRoundedIcon />}>
+                        Kartu
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
               {emptyRows > 0 && (
                 <TableRow
                   style={{

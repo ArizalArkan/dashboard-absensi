@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
@@ -24,20 +24,26 @@ import { useUser } from '@/hooks/use-user';
 const schema = zod.object({
   username: zod.string().min(1, { message: 'Username is required' }),
   password: zod.string().min(1, { message: 'Password is required' }),
-  role: zod.enum(['petugas', 'admin'], { message: 'Role is required' }),
+  role: zod
+    .string()
+    .refine((value) => value === '' || ['petugas', 'admin'].includes(value), {
+      message: 'Role is required',
+    }),
 });
 
 type Values = zod.infer<typeof schema>;
 
-const defaultValues = { username: '', password: '', role: 'petugas' } satisfies Values;
+const defaultValues = { username: '', password: '', role: '' } satisfies Values;
 
 export function SignInForm(): React.JSX.Element {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const visitor = searchParams.get('visitor');
+  const isVisitorGuru = visitor === 'guru';
 
   const { checkSession } = useUser();
 
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
-
   const [isPending, setIsPending] = React.useState<boolean>(false);
 
   const {
@@ -52,7 +58,7 @@ export function SignInForm(): React.JSX.Element {
       setIsPending(true);
 
       try {
-        const { error } = await authClient.signInWithPassword(values);
+        const { error } = await authClient.signInEndpoint(values, isVisitorGuru);
 
         if (error) {
           setError('root', { type: 'server', message: error });
@@ -78,7 +84,7 @@ export function SignInForm(): React.JSX.Element {
   return (
     <Stack spacing={4}>
       <Stack spacing={1}>
-        <Typography variant="h4">Masuk Dashboard</Typography>
+        <Typography variant="h4">{isVisitorGuru ? 'Masuk Dashboard Guru' : 'Masuk Dashboard Master'}</Typography>
       </Stack>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={2}>
@@ -127,20 +133,25 @@ export function SignInForm(): React.JSX.Element {
               </FormControl>
             )}
           />
-          <Controller
-            control={control}
-            name="role"
-            render={({ field }) => (
-              <FormControl error={Boolean(errors.role)}>
-                <InputLabel>Role</InputLabel>
-                <Select {...field} label="Role">
-                  <MenuItem value="petugas">Petugas</MenuItem>
-                  <MenuItem value="admin">Admin</MenuItem>
-                </Select>
-                {errors.role ? <FormHelperText>{errors.role.message}</FormHelperText> : null}
-              </FormControl>
-            )}
-          />
+          {!isVisitorGuru && (
+            <Controller
+              control={control}
+              name="role"
+              render={({ field }) => (
+                <FormControl error={Boolean(errors.role)}>
+                  <InputLabel>Role</InputLabel>
+                  <Select {...field} label="Role">
+                    <MenuItem value="" disabled>
+                      Pilih Role
+                    </MenuItem>
+                    <MenuItem value="petugas">Petugas</MenuItem>
+                    <MenuItem value="admin">Admin</MenuItem>
+                  </Select>
+                  {errors.role ? <FormHelperText>{errors.role.message}</FormHelperText> : null}
+                </FormControl>
+              )}
+            />
+          )}
           {errors.root ? <Alert color="error">{errors.root.message}</Alert> : null}
           <Button disabled={isPending} type="submit" variant="contained">
             Masuk

@@ -12,12 +12,21 @@ import type { NavItemConfig } from '@/types/nav';
 import { paths } from '@/paths';
 import { isNavItemActive } from '@/lib/is-nav-item-active';
 import { Logo } from '@/components/core/logo';
+import { useUser } from '@/hooks/use-user';
 
 import { navItems } from './config';
 import { navIcons } from './nav-icons';
 
 export function SideNav(): React.JSX.Element {
   const pathname = usePathname();
+  const { user } = useUser();
+
+  const filteredNavItems = navItems.filter((item) => {
+    if (user?.role === 'guru' && ['guru', 'settings'].includes(item.key)) {
+      return false; // Hide "Guru" and "Settings" for role "guru"
+    }
+    return true;
+  });
 
   return (
     <Box
@@ -54,7 +63,7 @@ export function SideNav(): React.JSX.Element {
       </Stack>
       <Divider sx={{ borderColor: 'var(--mui-palette-neutral-700)' }} />
       <Box component="nav" sx={{ flex: '1 1 auto', p: '12px' }}>
-        {renderNavItems({ pathname, items: navItems })}
+        {renderNavItems({ pathname, items: filteredNavItems })}
       </Box>
       <Divider sx={{ borderColor: 'var(--mui-palette-neutral-700)' }} />
     </Box>

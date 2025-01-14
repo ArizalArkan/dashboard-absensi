@@ -38,7 +38,7 @@ export const useGetGuru = (): UseGetGuru => {
     queryKey: ['get_guru'],
     queryFn: async () => {
       const { data } = await axios.get<[]>(
-        'https://server-absensi-production.up.railway.app/api/attendances/guru-with-attendance'
+        `${process.env.NEXT_PUBLIC_BASE_URL}api/attendances/guru-with-attendance`
       );
       return data;
     },
@@ -52,7 +52,7 @@ export const useAddGuru = (): UseMutationResult<any, Error, AddGuruData> => {
   const mutation = useMutation({
     mutationFn: async (data) => {
       const response = await axios.post(
-        'https://server-absensi-production.up.railway.app/api/auth/add-user-guru',
+        `${process.env.NEXT_PUBLIC_BASE_URL}api/auth/add-user-guru`,
         data
       );
       return response.data;

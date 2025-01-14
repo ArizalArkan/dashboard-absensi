@@ -4,6 +4,7 @@
 'use client';
 
 import type { User } from '@/types/user';
+import { useSearchParams } from 'next/navigation';
 
 function generateToken(): string {
   const arr = new Uint8Array(12);
@@ -55,21 +56,31 @@ class AuthClient {
     return { error: 'Social authentication not implemented' };
   }
 
-  async signInWithPassword(params: SignInWithPasswordParams): Promise<{ error?: string }> {
+  async signInEndpoint(params: SignInWithPasswordParams, isVisitorGuru: boolean): Promise<{ error?: string }> {
     const { username, password, role } = params;
+
+    const endpointLogin = isVisitorGuru ? 'login-guru' : 'login-admin';
+
+    const payloadGuru = {
+      username,
+      password,
+      role: 'guru'
+    }
+
+    const payloadAdmin = {
+      username,
+      password,
+      role
+    }
 
     try {
       // Make API request to your backend
-      const response = await fetch('http://localhost:4000/api/auth/login', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}api/auth/${endpointLogin}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          username,
-          password,
-          role,
-        }),
+        body: JSON.stringify(isVisitorGuru ? payloadGuru : payloadAdmin)
       });
 
       // Parse the response
