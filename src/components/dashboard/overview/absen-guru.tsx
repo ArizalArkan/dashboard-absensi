@@ -62,14 +62,12 @@ export function AbsensiGuru({ sx, isCheckin }: AbsensiGuruProps): React.JSX.Elem
           setOpenModal(true);
         },
         (error) => {
-          console.error('Error get location:', error);
           setLoadingPosition(false);
           // Bisa tambahkan alert atau snackbar disini
         },
         { enableHighAccuracy: true }
       );
     } else {
-      console.error('Geolocation not supported by this browser.');
       setLoadingPosition(false);
     }
   };
