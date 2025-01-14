@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 'use client'; // khusus Next.js 13+ agar file ini bersifat client component
 
 import React from 'react';
@@ -15,7 +19,7 @@ const defaultIcon = L.icon({
 });
 L.Marker.prototype.options.icon = defaultIcon;
 
-type Props = {
+interface Props{
   position: { lat: number; lng: number };
 };
 

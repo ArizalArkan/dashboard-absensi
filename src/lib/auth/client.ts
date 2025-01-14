@@ -4,7 +4,6 @@
 'use client';
 
 import type { User } from '@/types/user';
-import { useSearchParams } from 'next/navigation';
 
 function generateToken(): string {
   const arr = new Uint8Array(12);

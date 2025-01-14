@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 'use client';
 
 import * as React from 'react';
-import type { Metadata } from 'next';
 import { Typography } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
-import { config } from '@/config';
 import { useUser } from '@/hooks/use-user';
 import { AbsensiGuru } from '@/components/dashboard/overview/absen-guru';
 import { Grup } from '@/components/dashboard/overview/grup-kontak';
