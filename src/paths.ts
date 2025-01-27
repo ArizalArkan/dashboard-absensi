@@ -4,6 +4,7 @@ export const paths = {
   dashboard: {
     dashboard: '/dashboard',
     siswa: '/dashboard/siswa',
+    sub1: '/dashboard/siswa/sub1',
     guru: '/dashboard/guru',
     presensi: '/dashboard/presensi',
     account: '/dashboard/account',

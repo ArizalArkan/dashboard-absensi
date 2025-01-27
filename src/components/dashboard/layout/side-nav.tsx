@@ -1,8 +1,12 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable react/no-array-index-key */
 'use client';
 
 import * as React from 'react';
 import RouterLink from 'next/link';
 import { usePathname } from 'next/navigation';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import { Collapse } from '@mui/material';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
@@ -11,8 +15,8 @@ import Typography from '@mui/material/Typography';
 import type { NavItemConfig } from '@/types/nav';
 import { paths } from '@/paths';
 import { isNavItemActive } from '@/lib/is-nav-item-active';
-import { Logo } from '@/components/core/logo';
 import { useUser } from '@/hooks/use-user';
+import { Logo } from '@/components/core/logo';
 
 import { navItems } from './config';
 import { navIcons } from './nav-icons';
@@ -72,9 +76,13 @@ export function SideNav(): React.JSX.Element {
 
 function renderNavItems({ items = [], pathname }: { items?: NavItemConfig[]; pathname: string }): React.JSX.Element {
   const children = items.reduce((acc: React.ReactNode[], curr: NavItemConfig): React.ReactNode[] => {
-    const { key, ...item } = curr;
+    const { key, subMenu, ...item } = curr;
 
-    acc.push(<NavItem key={key} pathname={pathname} {...item} />);
+    if (subMenu) {
+      acc.push(<NavItemSub key={key} pathname={pathname} subMenu={subMenu} {...item} />);
+    } else {
+      acc.push(<NavItem key={key} pathname={pathname} {...item} />);
+    }
 
     return acc;
   }, []);
@@ -144,5 +152,151 @@ function NavItem({ disabled, external, href, icon, matcher, pathname, title }: N
         </Box>
       </Box>
     </li>
+  );
+}
+function NavItemSub({
+  disabled,
+  external,
+  href,
+  icon,
+  matcher,
+  pathname,
+  title,
+  subMenu,
+}: NavItemProps): React.JSX.Element {
+  const active = isNavItemActive({ disabled, external, href, matcher, pathname });
+  const Icon = icon ? navIcons[icon] : null;
+
+  const [openSubMenu, setOpenSubMenu] = React.useState(false);
+  const handleOpenSubMenu = (): void => {
+    setOpenSubMenu(!openSubMenu);
+  };
+
+  React.useEffect(() => {
+    subMenu?.map((item) => {
+      if (pathname === item?.href) {
+        setOpenSubMenu(true);
+      }
+    });
+  }, [pathname, subMenu]);
+
+  return (
+    <>
+      <li>
+        <Box
+          onClick={handleOpenSubMenu}
+          {...{ role: 'button' }}
+          sx={{
+            alignItems: 'center',
+            borderRadius: 1,
+            color: 'var(--NavItem-color)',
+            cursor: 'pointer',
+            display: 'flex',
+            flex: '0 0 auto',
+            gap: 1,
+            p: '6px 16px',
+            position: 'relative',
+            textDecoration: 'none',
+            whiteSpace: 'nowrap',
+            ...(disabled && {
+              bgcolor: 'var(--NavItem-disabled-background)',
+              color: 'var(--NavItem-disabled-color)',
+              cursor: 'not-allowed',
+            }),
+            ...(active && { bgcolor: 'var(--NavItem-active-background)', color: 'var(--NavItem-active-color)' }),
+          }}
+        >
+          <Box sx={{ alignItems: 'center', display: 'flex', justifyContent: 'center', flex: '0 0 auto' }}>
+            {Icon ? (
+              <Icon
+                fill={active ? 'var(--NavItem-icon-active-color)' : 'var(--NavItem-icon-color)'}
+                fontSize="var(--icon-fontSize-md)"
+                weight={active ? 'fill' : undefined}
+              />
+            ) : null}
+          </Box>
+          <Box sx={{ flex: '1 1 auto' }}>
+            <Typography
+              component="span"
+              sx={{ color: 'inherit', fontSize: '0.875rem', fontWeight: 500, lineHeight: '28px' }}
+            >
+              {title}
+            </Typography>
+          </Box>
+          {openSubMenu ? <ExpandLess /> : <ExpandMore />}
+        </Box>
+      </li>
+      <Collapse in={openSubMenu} timeout="auto" unmountOnExit>
+        {subMenu?.map((item, index) => {
+          const activeSub = isNavItemActive({
+            disabled: item?.disabled,
+            external: item?.external,
+            href: item?.href,
+            matcher: item?.matcher,
+            pathname,
+          });
+
+          return (
+            <li
+              key={index}
+              style={{
+                marginLeft: '15px',
+              }}
+            >
+              <Box
+                {...(item?.href
+                  ? {
+                      component: item?.external ? 'a' : RouterLink,
+                      href: item?.href,
+                      target: item?.external ? '_blank' : undefined,
+                      rel: item?.external ? 'noreferrer' : undefined,
+                    }
+                  : { role: 'button' })}
+                sx={{
+                  alignItems: 'center',
+                  borderRadius: 1,
+                  color: 'var(--NavItem-color)',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  flex: '0 0 auto',
+                  gap: 1,
+                  p: '6px 16px',
+                  position: 'relative',
+                  textDecoration: 'none',
+                  whiteSpace: 'nowrap',
+                  ...(disabled && {
+                    bgcolor: 'var(--NavItem-disabled-background)',
+                    color: 'var(--NavItem-disabled-color)',
+                    cursor: 'not-allowed',
+                  }),
+                  ...(activeSub && {
+                    bgcolor: 'var(--NavItem-active-background)',
+                    color: 'var(--NavItem-active-color)',
+                  }),
+                }}
+              >
+                <Box sx={{ alignItems: 'center', display: 'flex', justifyContent: 'center', flex: '0 0 auto' }}>
+                  {Icon ? (
+                    <Icon
+                      fill={activeSub ? 'var(--NavItem-icon-active-color)' : 'var(--NavItem-icon-color)'}
+                      fontSize="var(--icon-fontSize-md)"
+                      weight={activeSub ? 'fill' : undefined}
+                    />
+                  ) : null}
+                </Box>
+                <Box sx={{ flex: '1 1 auto' }}>
+                  <Typography
+                    component="span"
+                    sx={{ color: 'inherit', fontSize: '0.875rem', fontWeight: 500, lineHeight: '28px' }}
+                  >
+                    {item?.title}
+                  </Typography>
+                </Box>
+              </Box>
+            </li>
+          );
+        })}
+      </Collapse>
+    </>
   );
 }
